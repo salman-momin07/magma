@@ -16,7 +16,7 @@ set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-include_directories("/usr/src/googletest/googlemock/include/")
+include_directories("/usr/src/googletest/googlemock/include/" .)
 link_directories("/usr/src/googletest/googlemock/lib/")
 
 add_executable(yaml_utils_test test_yaml_utils.cpp)
@@ -26,3 +26,13 @@ target_link_libraries(yaml_utils_test
     pthread
     ${GCOV_LIB})
 add_test(test_yaml_utils yaml_utils_test)
+
+add_executable(mconfig_loader_test test_mconfig_loader.cpp
+    lte/protos/mconfig/mconfigs.pb.cc
+    orc8r/protos/common.pb.cc)
+target_link_libraries(mconfig_loader_test
+    MAGMA_CONFIG
+    gmock_main gtest gtest_main gmock protobuf
+    pthread
+    ${GCOV_LIB})
+add_test(test_mconfig_loader mconfig_loader_test)
